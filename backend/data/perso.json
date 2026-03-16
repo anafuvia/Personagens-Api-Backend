@@ -1,0 +1,7 @@
+{
+    "batman":            ["batman/1.jpg",       "batman/2.jpg",          "batman/3.jpg"],
+    "mickey":              ["mickey/1.jpg",         "mickey/2.jpg",            "mickey/3.jpg"],
+    "pernalonga":           ["pernalonga/1.jpg",      "pernalonga/2.jpg",         "pernalonga/3.jpg"],
+    "scooby-doo":         ["scooby-doo/1.jpg",    "scooby-doo/2.jpg",       "scooby-doo/3.jpg"],
+    "tom-e-jerry":         ["tom-e-jerry/1.jpg",    "tom-e-jerry/2.jpg",       "tom-e-jerry/3.jpg"] 
+}
