@@ -1,36 +1,44 @@
 // =====================================
-//   NOSSA API DE CACHORROS
+//   NOSSA API DE PERSONAGENS
 //   Feita com Node.js + Express
 
 //   Agora as fotos NÃO são mais baixadas automaticamente.
-//   Elas devem existir manualmente na pasta:
+//   Elas são inseridas manualmente na pasta:
 
 //   data/fotos/
 // =====================================
 
-//Importar o framework Express para criar o servidor
+
+
+// express → cria o servidor
 const express = require("express");
-//Importar o CORS para permitir requisições de outros domínios (ex: front-end)
+
+//cors → permite o front-end acessar a API
 const cors = require("cors");
-//importa o módulo de arquivos do Node
+
+//fs → mexer com arquivos (não está sendo usado aqui diretamente)
 const fs = require("fs");
-//importar utilidades para trabalhar com caminhos de arquivos
+
+//path → ajuda a montar caminhos de pasta
 const path = require("path");
-//importar o arquivo JSON que contém as raças e fotos
+
+//personagens.json → arquivo com os dados (tipos + fotos)
 const personagens = require("./data/perso.json");
-//criar a aplicação Express
+
+//Cria o servidor (app)
 const app = express();
-//definir a porta onde o servidor irá rodar
+
+//Define a porta (3000)
 const PORT = 3000;
-//habilitar o uso de CORs na aplicação
+
+//Ativa o CORS (senão o front não consegue acessar)
 app.use(cors());
 
 //===================================
 //SERVIR ARQUIVOS ESTÁTICOS
 //===================================
 
-//Aqui estamos dizenso para o Express:
-//"TUDOOOOOOOO que estiver na pasta data/fotos pode ser acessado pela URL /fotos"
+//"TUDO que estiver na pasta data/fotos pode ser acessado pela URL /fotos"
 app.use(
     "/fotos", //rota pública
     express.static(
@@ -43,7 +51,8 @@ app.use(
 // FUNÇÃO AUXILIAR
 //===================================
 
-//Função que recebe um array e retorna um item aleatório dele
+//pega um array
+// escolhe um item aleatório
 function sortear(array) {
     //gerar um número aleatório entre 0 e o tamanho do array
     const i = Math.floor(Math.random() * array.length)
@@ -60,7 +69,7 @@ function sortear(array) {
 //===================================
 
 //===================================
-// ROTA 1 - Cachorro aleatório
+// ROTA 1 - Personagem aleatório
 //===================================
 
 //http://localhost:3000/api/personagens/aleatorio
@@ -73,6 +82,7 @@ app.get("/api/personagens/aleatorio", (req, res) => {
 
     //sortear uma foto aleatória
     const item = sortear(todasAsFotos)
+
     //Responder para o cliente em formato JSON
     res.json({
         //status da resposta
@@ -83,16 +93,16 @@ app.get("/api/personagens/aleatorio", (req, res) => {
 });
 
 //===================================
-// ROTA 2 - Cachorro por raça
+// ROTA 2 - personagem por tipo
 //===================================
-//http://localhost:3000/api/personagens/:raca
+//http://localhost:3000/api/personagens/:tipo
 
 app.get("/api/personagens/:tipo", (req, res) => {
 
-    //pega o parâmetro da URL (ex. husky)
+    //pega o parâmetro da URL (ex. batman)
     const tipo = req.params.tipo.toLowerCase();
 
-    //verifica se essa raça existe no JSON
+    //verifica se esse tipo existe no JSON
     if (!personagens[tipo]){
         res.status(404).json({
             //status de erro
@@ -103,7 +113,7 @@ app.get("/api/personagens/:tipo", (req, res) => {
         //encerra a execução da rota
         return;
     }
-    //sortear uma foto da raça solicitada
+    //sortear uma foto do tipo solicitada
     const item = sortear(personagens[tipo]);
     //retorna a resposta em JSON
     res.json({
